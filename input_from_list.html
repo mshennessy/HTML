@@ -1,0 +1,96 @@
+
+<!-- Other input options, selecting from a set list - various methods -->
+<!-- This one also includes more javascript -->
+ <!-- G Hennessy CUS -->
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Preferences</title>
+</head>
+<body>
+
+    <h2>Select Your Movie Preferences</h2>
+
+    <!-- Favorite Actor (Checkboxes) Checkboxes allow multiple selections-->
+    <p><strong>Choose your favorite Cinemas:</strong></p>
+    <label><input type="checkbox" name="cinema" value="IFI"> IFI</label><br>
+    <label><input type="checkbox" name="cinema" value="Lighthouse"> Lighthouse</label><br>
+    <label><input type="checkbox" name="cinema" value="Odeon"> Odeon</label><br>
+    <label><input type="checkbox" name="cinema" value="Movies@"> Movies@</label><br>
+    <label><input type="checkbox" name="cinema" value="Stella"> Stella</label><br>
+
+    <!-- Favorite Actor (Radio Buttons - Only One Selection) -->
+    <p><strong>Choose your favorite actor:</strong></p>
+    <label><input type="radio" name="actor" value="Leonardo DiCaprio"> Leonardo DiCaprio</label><br>
+    <label><input type="radio" name="actor" value="Meryl Streep"> Meryl Streep</label><br>
+    <label><input type="radio" name="actor" value="Denzel Washington"> Denzel Washington</label><br>
+
+    <!-- Favorite Director (Dropdown) -->
+    <p><strong>Choose your favorite director:</strong></p>
+    <select id="director">
+        <option value="">--Select a director--</option>
+        <option value="Christopher Nolan">Christopher Nolan</option>
+        <option value="Steven Spielberg">Steven Spielberg</option>
+        <option value="Martin Scorsese">Martin Scorsese</option>
+    </select>
+
+    <!-- Favorite Genres (Multi-Select) -->
+    <p><strong>Choose your favorite genre(s):</strong></p>
+    <select id="genres" multiple>
+        <option value="Comedy">Comedy</option>
+        <option value="Horror">Horror</option>
+        <option value="Drama">Drama</option>
+        <option value="Period">Period</option>
+    </select>
+
+    <br><br>
+    <button onclick="showSelection()">Submit</button>
+
+    <h3>Your Selections:</h3>
+    <p id="output"></p>
+
+    <script>
+        function showSelection() {
+            // Get selected actors
+           // 
+           // 
+            let cinemas = [];
+            document.querySelectorAll('input[name="cinema"]:checked').forEach(checkbox => {
+                cinemas.push(checkbox.value);
+            });
+
+            // Get selected actor (radio button)
+            let actor = document.querySelector('input[name="actor"]:checked'); // You have to find the checked box
+            let actorValue;
+            if (actor) {
+                actorValue = actor.value;
+            } else {
+                actorValue = "None selected";
+            }
+
+            // Get selected director
+            let director = document.getElementById("director").value;
+
+            // Get selected genres
+            //let genres = Array.from(document.getElementById("genres").selectedOptions).map(option => option.value);
+            let genres = [];
+            let selectedOptions = document.getElementById("genres").selectedOptions;
+
+            for (let i = 0; i < selectedOptions.length; i++) {
+                genres.push(selectedOptions[i].value);
+            }
+
+            // Display results
+            document.getElementById("output").innerHTML = 
+                "<strong>Cinemas:</strong> " + (cinemas.length > 0 ? cinemas.join(", ") : "None selected") + "<br>" +
+                "<strong>Actor:</strong> " + (actorValue || "None selected") + "<br>" +
+                "<strong>Director:</strong> " + (director || "None selected") + "<br>" +
+                "<strong>Genres:</strong> " + (genres.length > 0 ? genres.join(", ") : "None selected");
+        }
+    </script>
+
+</body>
+</html>
