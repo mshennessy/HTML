@@ -1,0 +1,83 @@
+<!--- Sample code for various input options. Note that the Ids su as id="name" are used
+later to identify which input is which in the javascript -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+</head>
+<body>
+
+    <h2>Enter Your Information</h2>
+
+    <form id="userForm">
+        <!-- Name (Short Text) -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br><br>
+
+        <!-- Age (Integer) -->
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+        <br><br>
+
+        <!-- GPA (Float) -->
+        <label for="gpa">GPA:</label>
+        <input type="number" id="gpa" step="0.01" required>
+        <br><br>
+
+        <!-- Current Student (Boolean: Yes/No Radio Buttons) -->
+        <label>Current Student:</label>
+        <input type="radio" name="student" value="Yes" required> Yes
+        <input type="radio" name="student" value="No"> No
+        <br><br>
+
+        <!-- Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <br><br>
+
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+        <br><br>
+
+        <!-- Feedback (Long Text) -->
+        <label for="feedback">Feedback:</label><br>
+        <textarea id="feedback" rows="4" cols="50"></textarea>
+        <br><br>
+
+        <button type="button" onclick="displayData()">Submit</button>
+    </form>
+
+    <h3>Your Entered Data:</h3>
+    <p id="output"></p>
+
+    <script>
+        // This is the javascript part
+        // It used the DOM structure to find the data entered by the user in the various input fields above
+        function displayData() {
+            // Get form values
+            let name = document.getElementById("name").value;
+            let age = parseInt(document.getElementById("age").value);
+            let gpa = parseFloat(document.getElementById("gpa").value);
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let feedback = document.getElementById("feedback").value;
+
+            // Get selected radio button (current student)
+            let studentRadio = document.querySelector('input[name="student"]:checked');
+            let isStudent = studentRadio ? studentRadio.value : "Not selected";
+
+            // Display results
+            document.getElementById("output").innerHTML = 
+                "<strong>Name:</strong> " + name + "<br>" +
+                "<strong>Age:</strong> " + age + "<br>" +
+                "<strong>GPA:</strong> " + gpa + "<br>" +
+                "<strong>Current Student:</strong> " + isStudent + "<br>" +
+                "<strong>Email:</strong> " + email + "<br>" +
+                "<strong>Password:</strong> " + "*".repeat(password.length) + " (hidden)" + "<br>" +
+                "<strong>Feedback:</strong> " + feedback;
+        }
+    </script>
