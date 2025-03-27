@@ -1,0 +1,94 @@
+<!-- Basic HTML code (with embedded style) to produce a simple navigation bar for a webpage -->
+<!-- G Hennessy CUS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Navigation</title>
+    <!-- The style attributes are embedded in the html file here - you can separate them out -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover, .navbar a.active {
+            background-color: #d64646;
+        }
+        .section {
+            padding: 100px 20px;
+            height: 100vh;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- navbar is a keyword here - don't change it-->
+    <div class="navbar">
+        <!-- Change each of these to suit your webpage. Make sure that the href matches the div Id below.-->
+        <!--- Notice the # on the href is not in the div Id-->
+        <a href="#home" class="active">Home</a>
+        <a href="#opt1">Opt1</a>
+        <a href="#opt2">Opt2</a>
+        <a href="#opt3">Opt3</a>
+    </div>
+    <!-- You can leave out the "section" attribute here. All options will be visible on one page -->
+    <div id="home" class="section">
+        Home scetion of page
+    </div>
+    <div id="opt1" class="section">
+        <h1>OPTION ONE</h1>
+        <br> 
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+        <p>Option 1 Content</p>
+   
+    </div>
+    <div id="opt2" class="section">
+        <h1>OPTION TWO</h1>
+        <br> 
+        <p>Option 2 Content</p>
+        <p>Option 2 Content</p>
+        <p>Option 2 Content</p>
+        <p>Option 2 Content</p>
+        <p>Option 2 Content</p>
+        <p>Option 2 Content</p>
+        <p>Option 2 Content</p>
+  
+    </div>
+    <div id="opt3" class="section">
+        <h1>OPTION THREE</h1>
+        <br> 
+        <p>Option 3 Content</p>
+        <p>Option 3 Content</p>
+        <p>Option 3 Content</p>
+        <p>Option 3 Content</p>
+        <p>Option 3 Content</p>
+        <p>Option 3 Content</p>
+ 
+    </div>
+    
+</body>
+</html>
