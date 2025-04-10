@@ -1,0 +1,111 @@
+<!-- Demo of PouchDB. Shows data being added to table and displayed and also generation of a graph-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PouchDB & Plotly Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <h1>Enter Your Details</h1>
+    <form id="dataForm">
+        <!-- Should match your database record in javascript-->
+        <label>Name: <input type="text" id="name" required></label><br><br>
+        <label>Age: <input type="number" id="age" required></label><br><br>
+        <label>Height (cm): <input type="number" id="height" step="0.1" required></label><br><br>
+        <label>Weight (kg): <input type="number" id="weight" step="0.1" required></label><br><br>
+        <label>Include in Graph?
+            <select id="include">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </label><br><br>
+        <button type="button" onclick="saveData()">Save Data</button>
+    </form>
+
+    <h2>Stored Data</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Height (cm)</th>
+                <th>Weight (kg)</th>
+                <th>Include in Graph?</th>
+            </tr>
+        </thead>
+        <tbody id="data-table">
+        </tbody>
+    </table>
+
+    <script>
+        // Create or open a PouchDB database
+        var db = new PouchDB('user_data');
+
+        // Function to save user data
+        function saveData() {
+            var name = document.getElementById("name").value;
+            var age = parseInt(document.getElementById("age").value);
+            var height = parseFloat(document.getElementById("height").value);
+            var weight = parseFloat(document.getElementById("weight").value);
+            var include = document.getElementById("include").value;
+            // NaN is a handy feature of javascript - means "Not a Number"
+            // isNaN() is a built in function
+            if (isNaN(age) || isNaN(height) || isNaN(weight)) {
+                alert("Please enter valid numbers for Age, Height, and Weight.");
+                return;
+            }
+
+            var doc = {
+                _id: new Date().toISOString(), // Unique ID based on timestamp
+                name: name,
+                age: age,
+                height: height,
+                weight: weight,
+                include: include
+            };
+
+            db.put(doc).then(function () {
+                fetchData(); // Refresh the table and graph
+            }).catch(function (err) {
+                console.error("Error saving data", err);
+            });
+        }
+
+        // Function to fetch and display data
+        function fetchData() {
+            db.allDocs({ include_docs: true }).then(function (result) {
+                var tableBody = document.getElementById("data-table");
+                tableBody.innerHTML = ""; // Clear table
+
+                var ageHeightData = [];
+                var totalHeight = 0, count = 0;
+
+                for (var i = 0; i < result.rows.length; i++) {
+                    var doc = result.rows[i].doc;
+
+                    // Add row to the table
+                    var row = "<tr><td>" + doc.name + "</td><td>" + doc.age + "</td><td>" + doc.height + "</td><td>" + doc.weight + "</td><td>" + doc.include + "</td></tr>";
+                    tableBody.innerHTML += row;
+
+                    // Only include in graph if user selected "Yes"
+                    if (doc.include === "yes") {
+                        ageHeightData.push({ x: doc.age, y: doc.height });
+                    }
+                }
+
+            }).catch(function (err) {
+                console.error("Error fetching data", err);
+            });
+        }
+
+        // Load data on page load
+        fetchData();
+    </script>
+
+</body>
+</html>
